@@ -1,0 +1,7 @@
+Primer,Minimum % identity,Max mismatches,Unique sequences,Total alignments,Number of alignments with mismatches,Proportion of alignments with 100% identity,mismatch_accessions
+N1 Forward,95,1,2532,2532,1,99.96050552922591,['MT350243.1']
+N1 Reverse,95.833,1,2532,2532,2,99.92101105845181,"['MT293178.1', 'MT451217.1']"
+N1 Probe,95.833,1,2532,2532,2,99.92101105845181,"['MT450956.1', 'MT304491.1']"
+N2 Forward,100,0,2532,2532,0,100.0,[]
+N2 Reverse,94.444,1,2532,2532,1,99.96050552922591,['MT385471.1']
+N2 Probe,95.652,1,2532,2532,2,99.92101105845181,"['MT412284.1', 'MT451410.1']"
