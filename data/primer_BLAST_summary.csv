@@ -1,7 +1,7 @@
-Primer,Minimum % identity,Max mismatches,Unique sequences,Total alignments,Number of alignments with mismatches,Proportion of alignments with 100% identity,mismatch_accessions
-N1 Forward,95,1,2532,2532,1,99.96050552922591,['MT350243.1']
-N1 Reverse,95.833,1,2532,2532,2,99.92101105845181,"['MT293178.1', 'MT451217.1']"
-N1 Probe,95.833,1,2532,2532,2,99.92101105845181,"['MT450956.1', 'MT304491.1']"
-N2 Forward,100,0,2532,2532,0,100.0,[]
-N2 Reverse,94.444,1,2532,2532,1,99.96050552922591,['MT385471.1']
-N2 Probe,95.652,1,2532,2532,2,99.92101105845181,"['MT412284.1', 'MT451410.1']"
+Primer,Minimum % identity,Max mismatches,Unique sequences,Total alignments,Number of alignments with mismatches,% alignments with 100% identity,Mean Alignment Length,% Sequences with Alignment Length Equal to full length of primer,Minimum Alignment Length,mismatch_accessions
+N1 Forward,95,1,2532,2532,1,99.96050552922591,19.998815165876778,99.96050552922591,17,['MT350243.1']
+N1 Reverse,95.833,1,2532,2532,2,99.92101105845181,23.985387045813585,99.60505529225908,20,"['MT293178.1', 'MT451217.1']"
+N1 Probe,95.833,1,2532,2532,2,99.92101105845181,23.94510268562401,98.1437598736177,21,"['MT450956.1', 'MT304491.1']"
+N2 Forward,100,0,2532,2532,0,100.0,19.994865718799367,99.92101105845181,11,[]
+N2 Reverse,94.444,1,2532,2532,1,99.96050552922591,17.998815165876778,99.92101105845181,16,['MT385471.1']
+N2 Probe,95.652,1,2532,2532,2,99.92101105845181,22.992101105845183,99.72353870458136,10,"['MT412284.1', 'MT451410.1']"
