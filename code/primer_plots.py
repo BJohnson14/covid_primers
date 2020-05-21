@@ -1,7 +1,9 @@
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
-def file_process(file, primer, primer_seq):
+def ind_file_process(file, primer, primer_seq):
     df = pd.read_csv(file)
 
     # select the highest scoring alignment for all seqs queried
@@ -27,12 +29,15 @@ def file_process(file, primer, primer_seq):
 
     # identify accession numbers for short seqs
     short_seqs = df1.loc[df1['alignment_length'] < len(primer_seq), :]
+    short_seqs.insert(0, 'primer', primer)
+    short_seqs = short_seqs.reset_index(drop=True)
+    short_seqs['align_length_diff'] = len(primer_seq) - short_seqs['alignment_length']
     short_list = short_seqs['subject acc.ver'].to_list()
 
     df_out['short_accessions'] = [short_list]
     df_out['all_problem_acessions'] = [list(set(mismatch_list + short_list))]
 
-    return df_out
+    return df_out, short_seqs
 
 
 def problem_seq_process(df_subset, string_list):
@@ -48,16 +53,34 @@ def problem_seq_process(df_subset, string_list):
     return problem_out_list
 
 
-def process_results(in_data_list):
-    results_list = []
+def process_results(in_data_list, in_string_list):
+    results_list_all = []
+    results_list_short = []
 
     for i_list in in_data_list:
-        out = file_process(i_list[0], i_list[1], i_list[2])
-        results_list.append(out)
+        out_tuple = ind_file_process(i_list[0], i_list[1], i_list[2])
+        results_list_all.append(out_tuple[0])
+        results_list_short.append(out_tuple[1])
 
-    df_append = pd.concat(results_list).reset_index(drop=True)
+    df_append = pd.concat(results_list_all).reset_index(drop=True)
     df_append.to_csv('../data/primer_BLAST_summary.csv', index=False)
-    problem_list = problem_seq_process(df_append, ['N1', 'N2'])
+    problem_list = problem_seq_process(df_append, in_string_list)
+
+    #TODO: finish plotting
+    df_short_plot = pd.concat(results_list_short).reset_index(drop=True)
+
+    p = sns.catplot(x="align_length_diff", col="primer",
+                    data=df_short_plot, kind="count",
+                    height=4, aspect=.7)
+    p.set_xlabels('Alignment lengths differences')
+    plt.tight_layout()
+    plt.savefig('../data/alignment_differences.png')
+    plt.clf()
+    q = sns.countplot(x='primer', hue='align_length_diff', data=df_short_plot)
+    q.set_xticklabels(q.get_xticklabels(), rotation=45)
+    plt.tight_layout()
+    plt.savefig('../data/alignment_differences_single.png')
+    # plt.show()
 
     return problem_list
 
@@ -70,6 +93,6 @@ data_list = [['../data/BZSJCU50114-Alignment-HitTable_N1_Forward.csv', 'N1 Forwa
              ['../data/BZU005YT114-Alignment-HitTable_N2_Reverse.csv', 'N2 Reverse', 'GCGCGACATTCCGAAGAA'],
              ['../data/BZU4JNT2114-Alignment-HitTable_N2_Probe.csv', 'N2 Probe', 'ACAATTTGCCCCCAGCGCTTCAG']]
 
-problem_accessions = process_results(data_list)
+problem_accessions = process_results(data_list, ['N1', 'N2'])
 
 print(problem_accessions)
