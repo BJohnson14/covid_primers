@@ -11,37 +11,65 @@ def file_process(file, primer, target_length):
                    'Minimum % identity': df1['%_identity'].min(), 'Max mismatches': df1['mismatches'].max(),
                    'Unique sequences': len(df1['subject acc.ver'].unique()), 'Total alignments': len(df1),
                    'Number of alignments with mismatches': len(df1.loc[df1['%_identity'] < 100, :]),
-                   '% alignments with 100% identity': 100 * (1 -len(df1.loc[df1['%_identity'] < 100, :]) / len(df1)),
+                   '% alignments with 100% identity': 100 * (1 - len(df1.loc[df1['%_identity'] < 100, :]) / len(df1)),
                    'Mean Alignment Length': df1['alignment_length'].mean(),
-                   '% Sequences with Alignment Length Equal to full length of primer': (100 * (1 - len(df1.loc[df1['alignment_length'] < target_length, :]) / len(df1))),
+                   '% Sequences with Alignment Length Equal to full length of primer':
+                       (100 * (1 - len(df1.loc[df1['alignment_length'] < target_length, :]) / len(df1))),
                    'Minimum Alignment Length': df1['alignment_length'].min()}
 
     # identify accession numbers for mismatches
     mismatch_seqs = df1.loc[df1['%_identity'] < 100, :]
     mismatch_list = mismatch_seqs['subject acc.ver'].to_list()
 
+    # add the mismatch list to the df after transposing
     df_out = pd.DataFrame.from_dict(output_dict, orient='index').T
     df_out['mismatch_accessions'] = [mismatch_list]
 
     # identify accession numbers for short seqs
-    mismatch_seqs = df1.loc[df1['alignment_length'] < target_length, :]
-    print(mismatch_seqs)
+    short_seqs = df1.loc[df1['alignment_length'] < target_length, :]
+    short_list = short_seqs['subject acc.ver'].to_list()
+
+    df_out['short_accessions'] = [short_list]
+    df_out['all_problem_acessions'] = [list(set(mismatch_list + short_list))]
 
     return df_out
 
 
-output_N1_forward = file_process('../data/BZSJCU50114-Alignment-HitTable_N1_Forward.csv', 'N1 Forward', 20)
-output_N1_reverse = file_process('../data/BZT5F9NN114-Alignment-HitTable_N1_Reverse.csv', 'N1 Reverse', 24)
-output_N1_probe = file_process('../data/BZTBUZH7114-Alignment-HitTable_N1_Probe.csv', 'N1 Probe', 24)
-output_N2_forward = file_process('../data/BZTHE240114-Alignment-HitTable_N2_Forward.csv', 'N2 Forward', 20)
-output_N2_reverse = file_process('../data/BZU005YT114-Alignment-HitTable_N2_Reverse.csv', 'N2 Reverse', 18)
-output_N2_probe = file_process('../data/BZU4JNT2114-Alignment-HitTable_N2_Probe.csv', 'N2 Probe', 23)
+def problem_seq_process(df_subset, string_list):
+    problem_dict = {}
+
+    for string in string_list:
+        problem_df = df_subset[df_subset['Primer'].str.contains(string)]
+        problem_out_list = list(set([a for b in problem_df.all_problem_acessions.tolist() for a in b]))
+        problem_dict[string] = problem_out_list
+
+    problem_out_list = list(set(problem_dict[string_list[0]]) & set(problem_dict[string_list[1]]))
+
+    return problem_out_list
 
 
-df_append = pd.concat([output_N1_forward, output_N1_reverse, output_N1_probe, output_N2_forward, output_N2_reverse,
-                         output_N2_probe])
+def process_results(in_data_list):
+    results_list = []
 
-print(df_append.reset_index(drop=True))
+    for i_list in in_data_list:
+        out = file_process(i_list[0], i_list[1], i_list[2])
+        results_list.append(out)
 
-df_append.to_csv('../data/primer_BLAST_summary.csv', index=False)
+    df_append = pd.concat(results_list).reset_index(drop=True)
+    df_append.to_csv('../data/primer_BLAST_summary.csv', index=False)
+    problem_list = problem_seq_process(df_append, ['N1', 'N2'])
 
+    return problem_list
+
+
+# process the BLAST alignment results
+data_list = [['../data/BZSJCU50114-Alignment-HitTable_N1_Forward.csv', 'N1 Forward', 20],
+             ['../data/BZT5F9NN114-Alignment-HitTable_N1_Reverse.csv', 'N1 Reverse', 24],
+             ['../data/BZTBUZH7114-Alignment-HitTable_N1_Probe.csv', 'N1 Probe', 24],
+             ['../data/BZTHE240114-Alignment-HitTable_N2_Forward.csv', 'N2 Forward', 20],
+             ['../data/BZU005YT114-Alignment-HitTable_N2_Reverse.csv', 'N2 Reverse', 18],
+             ['../data/BZU4JNT2114-Alignment-HitTable_N2_Probe.csv', 'N2 Probe', 23]]
+
+problem_accessions = process_results(data_list)
+
+print(problem_accessions)

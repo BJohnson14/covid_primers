@@ -1,0 +1,108 @@
+N1 Forward
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/VA-DCLS-0053/2020, complete genome
+Sequence ID: MT350243.1 Length: 29856 
+Range 1: 28281 to 28300
+
+Score:32.2 bits(16), Expect:7e-05, 
+Identities:19/20(95%),  Gaps:0/20(0%), Strand: Plus/Plus
+
+Query  1      GACCCCAAAATCAGCGAAAT  20
+              ||||||||||||| ||||||
+Sbjct  28281  GACCCCAAAATCATCGAAAT  28300
+
+
+N1 Reverse
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USAWA-UW413/2020, complete genome
+Sequence ID: MT293178.1 Length: 29868 
+Range 1: 28304 to 28327
+
+Score:40.1 bits(20), Expect:4e-07, 
+Identities:23/24(96%),  Gaps:0/24(0%), Strand: Plus/Minus
+
+Query  1      TCTGGTTACTGCCAGTTGAATCTG  24
+              |||||||||||||||||| |||||
+Sbjct  28327  TCTGGTTACTGCCAGTTGTATCTG  28304
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/AUS/VIC325/2020, complete genome
+Sequence ID: MT451217.1 Length: 29801 
+Range 1: 28296 to 28319
+
+Score:44.1 bits(22), Expect:2e-08, 
+Identities:23/24(96%),  Gaps:0/24(0%), Strand: Plus/Minus
+
+Query  1      TCTGGTTACTGCCAGTTGAATCTG  24
+              |||||||||||||||||||| |||
+Sbjct  28319  TCTGGTTACTGCCAGTTGAAYCTG  28296
+
+
+N1 Probe
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/AUS/VIC41/2020, complete genome
+Sequence ID: MT450956.1 Length: 29812 
+Range 1: 28270 to 28293
+
+Score:44.1 bits(22), Expect:2e-08, 
+Identities:23/24(96%),  Gaps:0/24(0%), Strand: Plus/Plus
+
+Query  1      ACCCCGCATTACGTTTGGTGGACC  24
+              |||||| |||||||||||||||||
+Sbjct  28270  ACCCCGYATTACGTTTGGTGGACC  28293
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/TX_2967/2020, complete genome
+Sequence ID: MT304491.1 Length: 29882 
+Range 1: 28309 to 28332
+
+Score:44.1 bits(22), Expect:2e-08, 
+Identities:23/24(96%),  Gaps:0/24(0%), Strand: Plus/Plus
+
+Query  1      ACCCCGCATTACGTTTGGTGGACC  24
+              |||||| |||||||||||||||||
+Sbjct  28309  ACCCCGYATTACGTTTGGTGGACC  28332
+
+
+N2 Reverse
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/CA-CZB0154/2020, complete genome
+Sequence ID: MT385471.1 Length: 29840 
+Range 1: 29201 to 29218
+
+Score:28.2 bits(14), Expect:8e-04, 
+Identities:17/18(94%),  Gaps:0/18(0%), Strand: Plus/Minus
+
+Query  1      GCGCGACATTCCGAAGAA  18
+              |||||||||||| |||||
+Sbjct  29218  GCGCGACATTCCAAAGAA  29201
+
+
+
+N2 Probe
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/CT-UW-5773/2020, complete genome
+Sequence ID: MT412284.1 Length: 29869 
+Range 1: 29158 to 29180
+
+Score:38.2 bits(19), Expect:1e-06, 
+Identities:22/23(96%),  Gaps:0/23(0%), Strand: Plus/Plus
+
+Query  1      ACAATTTGCCCCCAGCGCTTCAG  23
+              ||||||||||| |||||||||||
+Sbjct  29158  ACAATTTGCCCTCAGCGCTTCAG  29180
+
+
+>Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/AUS/VIC597/2020, complete genome
+Sequence ID: MT451410.1 Length: 29808 
+Range 1: 29149 to 29171
+
+Score:42.1 bits(21), Expect:9e-08, 
+Identities:22/23(96%),  Gaps:0/23(0%), Strand: Plus/Plus
+
+Query  1      ACAATTTGCCCCCAGCGCTTCAG  23
+              |||||||||||| ||||||||||
+Sbjct  29149  ACAATTTGCCCCYAGCGCTTCAG  29171
+
+
+
+
+
