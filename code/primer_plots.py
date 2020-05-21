@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def file_process(file, primer, target_length):
+def file_process(file, primer, primer_seq):
     df = pd.read_csv(file)
 
     # select the highest scoring alignment for all seqs queried
@@ -14,7 +14,7 @@ def file_process(file, primer, target_length):
                    '% alignments with 100% identity': 100 * (1 - len(df1.loc[df1['%_identity'] < 100, :]) / len(df1)),
                    'Mean Alignment Length': df1['alignment_length'].mean(),
                    '% Sequences with Alignment Length Equal to full length of primer':
-                       (100 * (1 - len(df1.loc[df1['alignment_length'] < target_length, :]) / len(df1))),
+                       (100 * (1 - len(df1.loc[df1['alignment_length'] < len(primer_seq), :]) / len(df1))),
                    'Minimum Alignment Length': df1['alignment_length'].min()}
 
     # identify accession numbers for mismatches
@@ -26,7 +26,7 @@ def file_process(file, primer, target_length):
     df_out['mismatch_accessions'] = [mismatch_list]
 
     # identify accession numbers for short seqs
-    short_seqs = df1.loc[df1['alignment_length'] < target_length, :]
+    short_seqs = df1.loc[df1['alignment_length'] < len(primer_seq), :]
     short_list = short_seqs['subject acc.ver'].to_list()
 
     df_out['short_accessions'] = [short_list]
@@ -63,12 +63,12 @@ def process_results(in_data_list):
 
 
 # process the BLAST alignment results
-data_list = [['../data/BZSJCU50114-Alignment-HitTable_N1_Forward.csv', 'N1 Forward', 20],
-             ['../data/BZT5F9NN114-Alignment-HitTable_N1_Reverse.csv', 'N1 Reverse', 24],
-             ['../data/BZTBUZH7114-Alignment-HitTable_N1_Probe.csv', 'N1 Probe', 24],
-             ['../data/BZTHE240114-Alignment-HitTable_N2_Forward.csv', 'N2 Forward', 20],
-             ['../data/BZU005YT114-Alignment-HitTable_N2_Reverse.csv', 'N2 Reverse', 18],
-             ['../data/BZU4JNT2114-Alignment-HitTable_N2_Probe.csv', 'N2 Probe', 23]]
+data_list = [['../data/BZSJCU50114-Alignment-HitTable_N1_Forward.csv', 'N1 Forward', 'GACCCCAAAATCAGCGAAAT'],
+             ['../data/BZT5F9NN114-Alignment-HitTable_N1_Reverse.csv', 'N1 Reverse', 'TCTGGTTACTGCCAGTTGAATCTG'],
+             ['../data/BZTBUZH7114-Alignment-HitTable_N1_Probe.csv', 'N1 Probe', 'ACCCCGCATTACGTTTGGTGGACC'],
+             ['../data/BZTHE240114-Alignment-HitTable_N2_Forward.csv', 'N2 Forward', 'TTACAAACATTGGCCGCAAA'],
+             ['../data/BZU005YT114-Alignment-HitTable_N2_Reverse.csv', 'N2 Reverse', 'GCGCGACATTCCGAAGAA'],
+             ['../data/BZU4JNT2114-Alignment-HitTable_N2_Probe.csv', 'N2 Probe', 'ACAATTTGCCCCCAGCGCTTCAG']]
 
 problem_accessions = process_results(data_list)
 
